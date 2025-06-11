@@ -8,7 +8,7 @@ Projeto utilizando **MySQL** – Diagrama EER
 ![Diagrama EER](https://github.com/NatyAnalytcs-1/Desafio-E_Commerce/blob/main/Desafio%20e_commerce.png)
 
 
-## 📚 Narrativa do Projeto
+## 📚 Narrativa do Projeto - Venda de Produtos
 
 ### 🛒 PRODUTO
 - Os produtos são vendidos por uma única plataforma online.
@@ -17,10 +17,10 @@ Projeto utilizando **MySQL** – Diagrama EER
 - Um ou mais produtos podem compor um **pedido**.
 
 **Cardinalidades:**
-- Um produto pode estar relacionado a muitos pedidos (N:1 com `produto_pedido`).
-- Um produto pode ter múltiplos fornecedores (`produto_fornecedor`, N:N).
-- Um produto pode estar em diversos estoques (`produto_estoque`, N:N).
-- Um produto pode ser vendido por múltiplos vendedores terceiros (`produto_vendedor_terceiro`, N:N).
+- Produto <-> Pedido: **N:N** (via `produto_pedido`)
+- Produto <-> Fornecedor: **N:N** (via `produto_fornecedor`)
+- Produto <-> Estoque: **N:N** (via `produto_estoque`)
+- Produto <-> Vendedor Terceiro: **N:N** (via `produto_vendedor_terceiro`)
 
 ---
 
@@ -31,9 +31,9 @@ Projeto utilizando **MySQL** – Diagrama EER
 - Um cliente pode ter **mais de uma forma de pagamento**.
 
 **Cardinalidades:**
-- Um cliente pode ter vários endereços (1:N).
-- Um cliente pode ter vários pedidos (1:N).
-- Um cliente pode ter várias formas de pagamento (1:N).
+- Cliente → Pedidos: **1:N**
+- Cliente → Endereços: **1:N**
+- Cliente → Formas de pagamento: **1:N**
 
 ---
 
@@ -46,10 +46,10 @@ Projeto utilizando **MySQL** – Diagrama EER
 - Cada pedido está vinculado a **uma única forma de pagamento**.
 
 **Cardinalidades:**
-- Um pedido pode ter muitos produtos (N:N com `produto_pedido`).
-- Um pedido pertence a um cliente (N:1).
-- Um pedido possui um endereço (N:1).
-- Um pedido possui **uma forma de pagamento** (N:1).
+- Pedido → Cliente: **N:1**
+- Pedido → Endereço: **N:1**
+- Pedido → Forma de pagamento: **N:1**
+- Pedido <-> Produto: **N:N** (via `produto_pedido`)
 
 ---
 
@@ -58,8 +58,8 @@ Projeto utilizando **MySQL** – Diagrama EER
 - Uma forma de pagamento pode ser usada em vários pedidos.
 
 **Cardinalidades:**
-- Forma de pagamento: 1 cliente → N formas
-- Pedido: 1 forma → N pedidos
+- Cliente → Forma de pagamento: **1:N**
+- Forma de pagamento → Pedido: **1:N**
 
 ---
 
@@ -68,18 +68,25 @@ Projeto utilizando **MySQL** – Diagrama EER
 - Cada pedido está vinculado a **um endereço de entrega**.
 
 **Cardinalidades:**
-- 1 cliente → N endereços
-- 1 pedido → 1 endereço
+- Cliente → Endereço: **1:N**
+- Pedido → Endereço: **N:1**
 
 ---
 
-### 🧑‍🏭 FORNECEDOR & ESTOQUE
-- Cada produto possui pelo menos **um fornecedor**.
-- Cada produto possui **quantidade e localização em estoque**.
+## 🧑‍🏭 FORNECEDOR
+- Um produto possui pelo menos um fornecedor.
+- Um fornecedor pode fornecer diversos produtos.
 
 **Cardinalidades:**
-- Produto → N fornecedores (via `produto_fornecedor`)
-- Produto → N estoques (via `produto_estoque`)
+- Produto <-> Fornecedor: **N:N** (via `produto_fornecedor`)
+
+---
+
+## 🏬 ESTOQUE
+- Os produtos são armazenados em locais diferentes com quantidades específicas.
+
+**Cardinalidades:**
+- Produto <-> Estoque: **N:N** (via `produto_estoque`)
 
 ---
 
@@ -88,14 +95,13 @@ Projeto utilizando **MySQL** – Diagrama EER
 - Cada terceiro pode vender múltiplos produtos.
 
 **Cardinalidades:**
-- N:N entre produto e terceiro (`produto_vendedor_terceiro`)
+- Produto <-> Terceiro: **N:N** (via `produto_vendedor_terceiro`)
 
 ---
 
 ## 🔧 Tecnologias
 - MySQL Workbench
 - GitHub
-- SQL DDL
 
 ---
 
